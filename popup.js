@@ -1,39 +1,18 @@
-document.getElementById('formatBtn').addEventListener('click', async () => {
-    // const priority = document.getElementById('priority').value;
-    
-    const template = `
-  h3. Шаги воспроизведения
-  1. Go to...
-  2. Click on...
+document.getElementById('insertTemplate').addEventListener('click', async () => {
+  const errorElement = document.getElementById('errorMessage');
+  errorElement.style.display = 'none';
   
-  ### Ожидаемый результат
-  ...
-  
-  **Фактический результат**
-  ...
-  
-    `.trim();
-  
-    // Вставка в Jira
+  try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     
     await chrome.scripting.executeScript({
       target: { tabId: tab.id },
-      func: (text) => {
-        // Для Jira Cloud (новый редактор)
-        const jiraEditor = document.querySelector('[aria-label="Description"]') || 
-                          document.querySelector('.ak-editor-content-area');
-        if (jiraEditor) {
-          jiraEditor.focus();
-          document.execCommand('insertText', false, text);
-        } else {
-          alert('Откройте поле описания в Jira!');
-        }
-      },
-      args: [template]
+      files: ['contentScript.js']
     });
-  });
-
-
-//###Окружение
-// Chrome ${navigator.userAgent.match(/Chrome\/(\d+)/)[1]}, ${screen.width}x${screen.height}
+    
+  } catch (error) {
+    errorElement.textContent = `Ошибка: ${error.message}`;
+    errorElement.style.display = 'block';
+    console.error('Ошибка вставки:', error);
+  }
+});

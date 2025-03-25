@@ -2,16 +2,15 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <title>Jira Template Inserter</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <!-- <select id="priority">
-      <option value="High">🚨 High</option>
-      <option value="Medium" selected>⚠️ Medium</option>
-      <option value="Low">🐢 Low</option>
-    </select> -->
-    <button id="formatBtn">Insert a template</button>
+  <div class="popup-container">
+    <button id="insertTemplate" class="template-button">
+      Вставить шаблон баг-репорта
+    </button>
+    <div id="errorMessage" class="error-message"></div>
   </div>
   <script src="popup.js"></script>
 </body>
