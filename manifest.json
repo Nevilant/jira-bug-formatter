@@ -1,15 +1,29 @@
 {
   "manifest_version": 3,
-  "name": "Jira Bug Formatter",
+  "name": "Jira Markdown Formatter",
   "version": "1.0",
-  "permissions": ["activeTab", "scripting", "clipboardWrite"],
-  "host_permissions": ["*://*.atlassian.net/*"],
-  "web_accessible_resources": [{
-  "resources": ["contentScript.js"],
-  "matches": ["*://*.atlassian.net/*"]
-  }],
+  "description": "Форматирует текст задачи в Jira в Markdown при нажатии на кнопку.",
+  "permissions": ["scripting", "activeTab"],
   "action": {
     "default_popup": "popup.html",
-    "default_icon": "icon.png"
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*/browse/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
   }
 }
